@@ -45,15 +45,15 @@ def validate_config(config):
 def validate_source(data):
     source = data.get('source')
 
-    exists = os.path.exists(source)
-
-    if not exists:
-        if data.get('optional'):
-            LOG.info("%s does not exist, but is not required", source)
-            return False
-        else:
-            LOG.error("The source to copy does not exist: %s", source)
-            sys.exit(1)
+    # Only check existance if no wildcard found
+    if '*' not in source:
+        if not os.path.exists(source):
+            if data.get('optional'):
+                LOG.info("%s does not exist, but is not required", source)
+                return False
+            else:
+                LOG.error("The source to copy does not exist: %s", source)
+                sys.exit(1)
 
     return True
 

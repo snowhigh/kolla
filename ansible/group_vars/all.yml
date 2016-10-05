@@ -7,6 +7,9 @@
 node_templates_directory: "/usr/share/kolla/templates"
 container_config_directory: "/var/lib/kolla/config_files"
 
+# The directory to merge custom config files the kolla's config files
+node_custom_config: "/etc/kolla/config"
+
 # The directory to store the config files on the destination node
 node_config_directory: "/etc/kolla"
 
@@ -225,10 +228,28 @@ kolla_external_fqdn_cert: "{{ node_config_directory }}/certificates/haproxy.pem"
 kibana_user: "kibana"
 
 
+#######################
+# Glance options
+#######################
+glance_backend_ceph: "{{ enable_ceph }}"
+
+
+#################################
+# Cinder options
+#################################
+cinder_backend_ceph: "{{ enable_ceph }}"
+
+
+#######################
+# Nova options
+#######################
+nova_backend_ceph: "{{ enable_ceph }}"
+
+
 #################################
 # Cinder - Block Storage options
 #################################
-cinder_volume_driver: "{{ 'ceph' if enable_ceph | bool else 'lvm' }}"
+cinder_volume_driver: "{{ 'ceph' if cinder_backend_ceph | bool else 'lvm' }}"
 
 
 ###################

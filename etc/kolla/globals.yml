@@ -134,6 +134,26 @@ neutron_external_interface: "eth1"
 #ceph_pool_type: "replicated"
 
 
+#######################
+# Glance options
+#######################
+# Configure image backend.
+#glance_backend_ceph: "{{ enable_ceph }}"
+
+
+#######################
+# Cinder options
+#######################
+# Enable / disable Cinder backends
+#cinder_backend_ceph: "{{ enable_ceph }}"
+
+
+#######################
+# Nova options
+#######################
+#nova_backend_ceph: "{{ enable_ceph }}"
+
+
 #######################################
 # Manila - Shared File Systems Options
 #######################################
