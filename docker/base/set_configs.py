@@ -13,6 +13,7 @@
 # limitations under the License.
 
 import argparse
+import glob
 import json
 import logging
 import os
@@ -82,8 +83,9 @@ def copy_files(data):
 
     if source != source_path:
         # Source is file
-        LOG.info("Copying %s to %s", source, dest)
-        shutil.copy(source, dest)
+        for file in glob.glob(source):
+            LOG.info("Copying %s to %s", file, dest)
+            shutil.copy(file, dest)
     else:
         # Source is a directory
         for src in os.listdir(source_path):
