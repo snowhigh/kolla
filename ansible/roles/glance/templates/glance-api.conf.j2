@@ -39,10 +39,10 @@ memcached_servers = {% for host in groups['memcached'] %}{{ hostvars[host]['ansi
 flavor = keystone
 
 [glance_store]
-{% if enable_ceph | bool and glance_backend_ceph | bool %}
+{% if glance_backend_ceph | bool %}
 default_store = rbd
 stores = rbd
-rbd_store_user = koll-glance
+rbd_store_user = kolla-glance
 rbd_store_pool = {{ ceph_glance_pool_name }}
 rbd_store_chunk_size = 8
 {% else %}

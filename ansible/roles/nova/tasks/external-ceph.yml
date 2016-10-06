@@ -8,27 +8,22 @@
     - "nova-libvirt/secrets"
   when: inventory_hostname in groups['compute']
 
-- name: Find keyring files
-  local_action: find paths="{{ node_custom_config }}/nova/" patterns="^ceph\.client\..*?\.keyring$" use_regex=True
-  register: cephx_keyring_files
-
-- name: Copy over ceph keyring file
+- name: Copy over ceph files
   copy:
-    src: "{{ cephx_keyring_files.files[0].path }}"
-    dest: "{{ node_config_directory }}/{{item}}/"
-  with_items:
-    - nova-compute
-    - nova-libvirt
+    src: "{{ item }}"
+    dest: "{{ node_config_directory }}/nova-compute/"
+  with_fileglob:
+    - "{{ node_custom_config }}/nova/ceph*"
   when: inventory_hostname in groups['compute']
 
-- name: Copy over ceph.conf
+- name: Copy over ceph files
   copy:
-    src: "{{ node_custom_config }}/nova/ceph.conf"
-    dest: "{{ node_config_directory }}/{{ item }}/"
-  with_items:
-    - nova-compute
-    - nova-libvirt
+    src: "{{ item }}"
+    dest: "{{ node_config_directory }}/nova-libvirt/"
+  with_fileglob:
+    - "{{ node_custom_config }}/nova/ceph*"
   when: inventory_hostname in groups['compute']
+
 
 - name: Pushing secrets xml for libvirt
   template:
@@ -38,7 +33,7 @@
   when: inventory_hostname in groups['compute']
 
 - name: Extract key from file
-  local_action: shell cat {{ cephx_keyring_files.files[0].path }} | grep -E 'key\s*=' | awk '{ print $3 }'
+  local_action: shell cat {{ node_custom_config }}/nova/ceph.client.kolla-cinder.keyring | grep -E 'key\s*=' | awk '{ print $3 }'
   register: cephx_raw_key
 
 - name: Pushing secrets key for libvirt
