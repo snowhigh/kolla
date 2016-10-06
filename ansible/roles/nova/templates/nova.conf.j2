@@ -155,7 +155,7 @@ connection_uri = "qemu+tcp://{{ hostvars[inventory_hostname]['ansible_' + api_in
 images_type = rbd
 images_rbd_pool = {{ ceph_nova_pool_name }}
 images_rbd_ceph_conf = /etc/ceph/ceph.conf
-rbd_user = nova
+rbd_user = kolla-cinder
 rbd_secret_uuid = {{ rbd_secret_uuid }}
 disk_cachemodes="network=writeback"
 hw_disk_discard = unmap

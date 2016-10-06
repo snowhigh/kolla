@@ -139,6 +139,7 @@ neutron_external_interface: "eth1"
 #######################
 # Configure image backend.
 #glance_backend_ceph: "{{ enable_ceph }}"
+#ceph_glance_pool_name: "images"
 
 
 #######################
@@ -146,13 +147,15 @@ neutron_external_interface: "eth1"
 #######################
 # Enable / disable Cinder backends
 #cinder_backend_ceph: "{{ enable_ceph }}"
+#ceph_cinder_pool_name: "volumes"
+#ceph_cinder_backup_pool_name: "backups"
 
 
 #######################
 # Nova options
 #######################
 #nova_backend_ceph: "{{ enable_ceph }}"
-
+#ceph_nova_pool_name: "vms"
 
 #######################################
 # Manila - Shared File Systems Options
